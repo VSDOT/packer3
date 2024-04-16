@@ -22,7 +22,7 @@ source "amazon-ebs" "ubuntu_java" {
   region        = "us-east-1"
   source_ami_filter {
     filters = {
-      name                = "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*"
+      name                = "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*",                           #"ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*",
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
@@ -49,3 +49,5 @@ build {
     ]
   }
 }
+
+
