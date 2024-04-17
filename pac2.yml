@@ -32,19 +32,19 @@ jobs:
 
       - name: Initialize Packer
         id: initpacker
-        run: packer init ./packer-demo.pkr.hcl/
+        run: packer init ./packer-demo.pkr.hcl
 
       - name: Format Packer
         id: fmtpacker
-        run: packer fmt ./packer-demo.pkr.hcl/
+        run: packer fmt ./packer-demo.pkr.hcl
 
       - name: Validate Packer
         id: validate
-        run: packer validate ./packer-demo.pkr.hcl/
+        run: packer validate ./packer-demo.pkr.hcl
 
       - name: Build Image
         id: build
-        run: packer build ./packer-demo.pkr.hcl/
+        run: packer build ./packer-demo.pkr.hcl
 
 
       - name: Set up Terraform

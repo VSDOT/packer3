@@ -17,12 +17,12 @@ locals {
 }
 
 source "amazon-ebs" "ubuntu_java" {
-  ami_name      = "packer-aws-ubuntu-java-{{timestamp}}"                                 #"${var.ami_prefix}-${local.timestamp}"
+  ami_name      = "packer-aws-ubuntu-java-{{timestamp}}"                          #"${var.ami_prefix}-${local.timestamp}"
   instance_type = "t2.micro"
   region        = "us-east-1"
   source_ami_filter {
     filters = {
-      name                = "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*",                           #"ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*",
+      name                = "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*",               #"ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*",
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
