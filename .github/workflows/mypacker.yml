@@ -1,68 +1,98 @@
-name: AWS AMI using Packer Config
+name: Packer Build
+
 on:
   push:
     branches:
-      - master
+      - main  # Adjust the branch as needed
 
 jobs:
-  packer:
+  packer_build:
     runs-on: ubuntu-latest
-    name: packer
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v2
-        
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          # aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }} 
-          # if you have/need it
-          aws-region: us-east-1 
-          
+
       - name: Set up Packer
-        id: setup
-        uses: hashicorp/setup-packer@main
+        uses: hashicorp/setup-packer@v1
+        with:
+          version: 1.7.5  # Adjust to the desired Packer version
 
-      - name: Initialize Packer
-        id: initpacker
-        run: packer init ./packer-demo.pkr.hcl
-
-      - name: Format Packer
-        id: fmtpacker
-        run: packer fmt ./packer-demo.pkr.hcl
-
-      - name: Validate Packer
-        id: validate
-        run: packer validate ./packer-demo.pkr.hcl
-
-      - name: Build Image
-        id: build
-        run: packer build ./packer-demo.pkr.hcl
+      - name: Run Packer
+        run: |
+          packer build \
+            -var 'aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}' \
+            -var 'aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}' \
+            packer-demo.pkr.hcl  # Adjust to your Packer template file name
 
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v2
-        id: setupterraform
 
-      - name: Terraform Init
-        id: initailizeterraform
-        run: terraform init -migrate-state
 
-      - name: Format Terraform
-        id: formatterraform
-        run: terraform fmt
+# name: AWS AMI using Packer Config
+# on:
+#   push:
+#     branches:
+#       - master
 
-      - name: Validate Terraform
-        id: validateterraform
-        run: terraform validate
+# jobs:
+#   packer:
+#     runs-on: ubuntu-latest
+#     name: packer
 
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -input=false
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v2
+        
+#       - name: Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           # aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }} 
+#           # if you have/need it
+#           aws-region: us-east-1 
+          
+#       - name: Set up Packer
+#         id: setup
+#         uses: hashicorp/setup-packer@main
 
-      - name: Terraform Apply
-        id: apply
-        run: terraform apply --auto-approve
+#       - name: Initialize Packer
+#         id: initpacker
+#         run: packer init ./packer-demo.pkr.hcl
+
+#       - name: Format Packer
+#         id: fmtpacker
+#         run: packer fmt ./packer-demo.pkr.hcl
+
+#       - name: Validate Packer
+#         id: validate
+#         run: packer validate ./packer-demo.pkr.hcl
+
+#       - name: Build Image
+#         id: build
+#         run: packer build ./packer-demo.pkr.hcl
+
+
+#       - name: Set up Terraform
+#         uses: hashicorp/setup-terraform@v2
+#         id: setupterraform
+
+#       - name: Terraform Init
+#         id: initailizeterraform
+#         run: terraform init -migrate-state
+
+#       - name: Format Terraform
+#         id: formatterraform
+#         run: terraform fmt
+
+#       - name: Validate Terraform
+#         id: validateterraform
+#         run: terraform validate
+
+#       - name: Terraform Plan
+#         id: plan
+#         run: terraform plan -input=false
+
+#       - name: Terraform Apply
+#         id: apply
+#         run: terraform apply --auto-approve
