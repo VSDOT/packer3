@@ -3,7 +3,7 @@ name: Packer Build
 on:
   push:
     branches:
-      - main  # Adjust the branch as needed
+      - master  # Adjust the branch as needed
 
 jobs:
   packer_build:
