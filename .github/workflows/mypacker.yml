@@ -16,7 +16,7 @@ jobs:
       - name: Set up Packer
         uses: hashicorp/setup-packer@v1
         with:
-          version: 1.7.5  # Adjust to the desired Packer version
+          version: 2.315.0  # Adjust to the desired Packer version
 
       - name: Run Packer
         run: |
